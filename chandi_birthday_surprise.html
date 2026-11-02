@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Birthday Surprise for Chandi 💗</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:18px;font-family:Georgia,serif;color:#542b49;background:linear-gradient(145deg,#fff0f5,#fce4ef 55%,#f5e8ff);min-height:100vh;display:flex;justify-content:center;align-items:center}
+#app{width:min(100%,560px);background:linear-gradient(145deg,#fff0f5,#fce4ef 55%,#f5e8ff);border-radius:24px;padding:20px;text-align:center;min-height:590px;box-shadow:0 12px 35px #9e648522}
+.panel{display:none;min-height:530px;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:enter .6s ease}
+.panel.active{display:flex}
+h2{font-size:clamp(27px,6vw,38px);line-height:1.2;margin:0;color:#71365d}
+p{font-size:16px;line-height:1.6;margin:0;max-width:430px;color:#542b49}
+.eyebrow{font:700 11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#914768}
+.btn{border:0;border-radius:30px;padding:13px 23px;background:linear-gradient(100deg,#b94d82,#7853a8);color:#fff;font:600 14px Arial,sans-serif;box-shadow:0 7px 18px #bd7cae55;cursor:pointer}
+.balloons{display:grid;grid-template-columns:repeat(2,minmax(90px,120px));gap:22px 30px;margin:12px auto}
+.balloon{height:112px;border:0;border-radius:50% 50% 46% 46%;color:white;font:700 12px Arial,sans-serif;position:relative;cursor:pointer;box-shadow:inset -9px -8px 15px #0002,0 8px 14px #a45d8530;transition:.25s}
+.balloon:after{content:"";position:absolute;left:50%;bottom:-15px;width:1px;height:24px;background:#bd8aa8}
+.balloon:nth-child(1){background:linear-gradient(135deg,#f5a1bf,#dc5c91)}
+.balloon:nth-child(2){background:linear-gradient(135deg,#b7a0e9,#8567c4)}
+.balloon:nth-child(3){background:linear-gradient(135deg,#f7c3a9,#e88d88)}
+.balloon:nth-child(4){background:linear-gradient(135deg,#f1a9d5,#c96ab0)}
+.balloon.popped{opacity:0;transform:scale(1.5) rotate(18deg);pointer-events:none}
+.reveals{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:38px}
+.word{background:#fff9fc;border:1px solid #edc4d8;border-radius:18px;padding:8px 12px;font:700 13px Arial,sans-serif;color:#71365d}
+.cake{font-size:100px;filter:drop-shadow(0 8px 8px #9d648533)}
+.flowers{font-size:76px;letter-spacing:4px;animation:float 2.5s ease-in-out infinite}
+.envelope{font-size:92px;cursor:pointer;border:0;background:transparent}
+.letter{display:none;background:#fffafc;border:1px solid #edcada;border-radius:17px;padding:22px 19px;max-width:440px;box-shadow:0 9px 25px #a45d8520;text-align:left;line-height:1.8;font-size:15px;color:#542b49}
+.letter.show{display:block;animation:enter .5s ease}
+.letter h2{font-size:24px;margin-bottom:12px}
+.progress{height:5px;background:#eed5e2;border-radius:9px;overflow:hidden;margin:0 auto 15px;max-width:360px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#d66b9d,#9874c9);transition:width .4s}
+.tiny{font:12px Arial,sans-serif;color:#874665}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+</style>
+</head>
+<body>
+<main id="app">
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="tiny" id="count">A little birthday surprise · 1 of 4</div>
+
+  <section class="panel active">
+    <div style="font-size:65px">🎀</div>
+    <div class="eyebrow">A special day for someone special</div>
+    <h2>Happy Birthday,<br>Chandi! 💗</h2>
+    <p>A tiny surprise made with lots of smiles, silly moments and birthday wishes.</p>
+    <button class="btn" data-next="1">Open your surprise ✨</button>
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">First, a little game</div>
+    <h2>Pop the 4 balloons! 🎈</h2>
+    <p>Tap them one by one in order to reveal your special message.</p>
+    <div class="balloons">
+      <button class="balloon" data-balloon="0" aria-label="Pop first balloon">POP!</button>
+      <button class="balloon" data-balloon="1" aria-label="Pop second balloon">POP!</button>
+      <button class="balloon" data-balloon="2" aria-label="Pop third balloon">POP!</button>
+      <button class="balloon" data-balloon="3" aria-label="Pop fourth balloon">POP!</button>
+    </div>
+    <div class="reveals" id="reveals"></div>
+    <p id="hint" class="tiny">Start with balloon number 1 💕</p>
+    <button class="btn" id="balloon-next" style="display:none">Continue 🎉</button>
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">Make a birthday wish</div>
+    <div class="cake">🎂</div>
+    <h2>Make a wish, Chandi! ✨</h2>
+    <p>May your year be filled with laughter, lovely surprises and countless reasons to smile.</p>
+    <button class="btn" data-next="3">Next surprise 💐</button>
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">A little bouquet for you</div>
+    <div class="flowers">💐🌷🌸</div>
+    <h2>Flowers for you!</h2>
+    <p>Sending you a whole garden of happiness today. Keep shining and being wonderfully you. 🌷</p>
+    <button class="btn" data-next="4">One last thing… 💌</button>
+  </section>
+
+  <section class="panel">
+    <div class="eyebrow">A little birthday letter</div>
+    <h2>Just for you, Chandi 💗</h2>
+    <p>Tap the envelope to open your letter.</p>
+    <button class="envelope" id="envelope" aria-label="Open birthday letter">💌</button>
+    <div class="letter" id="letter">
+      <h2>Dear Chandi, 💕</h2>
+      Happy Birthday! 🎂 I hope your day is full of fun, laughter, good memories and all the things that make you happy.
+      <br><br>
+      Keep being your funny, lovely and one-of-a-kind self. May this new year bring you exciting opportunities, beautiful moments and success in everything you do.
+      <br><br>
+      And remember… you're a MOTI 😅😂
+      <br><br>
+      Have the most amazing birthday! 🌸
+      <br><br>
+      <strong>With lots of best-friend wishes,</strong><br>
+      Your friend 💗
+    </div>
+    <p class="tiny" id="letter-hint">Made with birthday wishes and a little mischief ✨</p>
+  </section>
+</main>
+<script>
+(() => {
+  const panels=[...document.querySelectorAll('.panel')];
+  const bar=document.getElementById('bar'),count=document.getElementById('count');
+  let popped=0;
+  const words=['YOU 💗','ARE 🦋','A 🌸','MOTI 😅'];
+  function go(n){
+    panels.forEach((p,i)=>p.classList.toggle('active',i===n));
+    bar.style.width=(n/4*100)+'%';
+    count.textContent=n===4?'Your birthday letter 💌':`A little birthday surprise · ${n+1} of 4`;
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.next))));
+  document.querySelectorAll('[data-balloon]').forEach(b=>b.addEventListener('click',()=>{
+    const i=Number(b.dataset.balloon);
+    if(i!==popped){document.getElementById('hint').textContent='One at a time! Pop balloon '+(popped+1)+' first 💗';return;}
+    b.classList.add('popped');popped++;
+    const w=document.createElement('span');w.className='word';w.textContent=words[i];document.getElementById('reveals').appendChild(w);
+    document.getElementById('hint').textContent=popped===4?'YOU ARE A MOTI 😅💕':'Yay! Now pop the next balloon ✨';
+    if(popped===4)document.getElementById('balloon-next').style.display='inline-block';
+  }));
+  document.getElementById('balloon-next').addEventListener('click',()=>go(2));
+  document.getElementById('envelope').addEventListener('click',()=>{
+    document.getElementById('letter').classList.add('show');
+    document.getElementById('envelope').textContent='💖';
+    document.getElementById('letter-hint').textContent='Happy Birthday, Chandi! 🎉';
+  });
+})();
+</script>
+</body>
+</html>
